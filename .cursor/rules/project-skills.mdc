@@ -1,0 +1,26 @@
+---
+description: Registers project-level skills from .cursor/skills/ for agent discovery
+alwaysApply: true
+---
+
+# Project Skills
+
+This project has 23 specialized skills in `.cursor/skills/`. The 15 below are routed for active agent discovery. The remaining 8 (test-driven-development, security-and-hardening, observability-and-instrumentation, api-and-interface-design, spec-driven-development, documentation-and-adrs, threejs-loaders, threejs-textures) remain installed on disk and can be read manually when needed — they are excluded from routing because this is a static portfolio site with no test framework, no backend, no user input, and no 3D model/texture assets.
+
+| Skill | When to use | Path |
+|---|---|---|
+| frontend-ui-engineering | Building accessible, responsive, production-quality UI components and pages | .cursor/skills/frontend-ui-engineering/SKILL.md |
+| incremental-implementation | Any change touching multiple files — deliver in small verifiable slices | .cursor/skills/incremental-implementation/SKILL.md |
+| motion-design | Animation direction, choreography, Disney principles, timing/easing for UI | .cursor/skills/motion-design/SKILL.md |
+| debugging-and-error-recovery | Tests fail, builds break, unexpected errors — systematic root-cause analysis | .cursor/skills/debugging-and-error-recovery/SKILL.md |
+| performance-optimization | Core Web Vitals, bundle size, caching, profiling bottlenecks | .cursor/skills/performance-optimization/SKILL.md |
+| browser-testing-with-devtools | Inspecting DOM, console errors, network requests, visual verification | .cursor/skills/browser-testing-with-devtools/SKILL.md |
+| code-review-and-quality | Reviewing code before merge across correctness, security, performance axes | .cursor/skills/code-review-and-quality/SKILL.md |
+| threejs-fundamentals | Three.js scene setup, cameras, renderers, basic concepts | .cursor/skills/threejs-fundamentals/SKILL.md |
+| threejs-animation | Three.js animation loops, keyframes, morph targets, skeletal animation | .cursor/skills/threejs-animation/SKILL.md |
+| threejs-geometry | Three.js geometries, custom meshes, buffer geometry, vertices | .cursor/skills/threejs-geometry/SKILL.md |
+| threejs-interaction | Three.js raycasting, mouse/touch events, object picking, controls | .cursor/skills/threejs-interaction/SKILL.md |
+| threejs-materials | Three.js materials, PBR, custom shaders, material properties | .cursor/skills/threejs-materials/SKILL.md |
+| threejs-lighting | Three.js lights, shadows, environment maps, global illumination | .cursor/skills/threejs-lighting/SKILL.md |
+| threejs-shaders | Three.js custom shaders, GLSL, ShaderMaterial, uniforms, varyings | .cursor/skills/threejs-shaders/SKILL.md |
+| threejs-postprocessing | Three.js post-processing effects, render passes, bloom, DOF, FXAA | .cursor/skills/threejs-postprocessing/SKILL.md |

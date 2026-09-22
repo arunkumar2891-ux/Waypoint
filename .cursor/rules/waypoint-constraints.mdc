@@ -1,0 +1,63 @@
+---
+description: Project-wide constraints for the Waypoint portfolio site
+alwaysApply: true
+---
+
+# Waypoint Constraints
+
+## Content
+
+- `content/source/Master ATS Resume.md` is the factual source of truth.
+- `content/work.ts`, `content/projects.ts`, and `content/profile.ts` must remain consistent with the source.
+- Never fabricate facts, metrics, users, customers, architecture, technologies, responsibilities, outcomes, dates, or lessons.
+- If source material does not support a claim, omit it rather than inventing it.
+
+## Implementation
+
+- Implement one bounded task at a time.
+- Do not expand scope beyond the current task.
+- Do not modify unrelated components.
+- Prefer existing architecture and dependencies before introducing new ones.
+
+## Validation
+
+- Primary validation sequence: `npm run typecheck` → `npm run lint` → `npm run build`.
+- There is currently no test framework.
+- Do not install a test framework unless explicitly requested.
+
+## Three.js
+
+- Three.js is for storytelling and architecture visualization, not decoration.
+- Keep geometry lightweight.
+- No physics engines.
+- No large textures or models unless explicitly required.
+- Avoid expensive post-processing.
+- Respect `prefers-reduced-motion`.
+- Provide graceful static fallback behavior.
+- Critical content must remain semantic HTML outside WebGL.
+
+## Design
+
+- Warm off-white background (`#FAFAF8`).
+- Near-black typography (`#171717`).
+- Muted gray supporting elements.
+- Restrained blue accent (`#2563eb`).
+- Editorial, architectural, technical visual language.
+- Structural borders preferred over card shadows.
+- Avoid generic SaaS dashboard aesthetics.
+- Avoid glassmorphism and excessive gradients.
+
+## Accessibility
+
+- Semantic HTML.
+- Keyboard-accessible interactions.
+- Visible focus states.
+- Respect `prefers-reduced-motion`.
+- Do not communicate essential information through color alone.
+
+## Performance
+
+- Protect Core Web Vitals (LCP < 2.5s, CLS < 0.1, INP < 200ms).
+- Avoid unnecessary client-side JavaScript.
+- Lazy-load heavy visualizations.
+- Avoid unnecessary dependencies.
