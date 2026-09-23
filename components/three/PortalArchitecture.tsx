@@ -19,7 +19,7 @@ import type { SceneProps } from '@/lib/types'
 
 /* ─── Tier definitions ─── */
 
-type TierKey = 'portal' | 'api' | 'data-ai' | 'platform'
+type TierKey = 'portal' | 'api' | 'data-ai' | 'platform' | 'ops'
 
 interface ArchNode {
   id: string
