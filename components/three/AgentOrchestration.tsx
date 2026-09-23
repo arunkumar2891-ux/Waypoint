@@ -143,7 +143,7 @@ function EdgeLine({ startPos, endPos, highlight, dimmed }: {
   dimmed: boolean
 }) {
   const lineRef = useRef<THREE.Line>(null)
-  const targetColor = useRef(new THREE.Color('#a3a3a3'))
+  const targetColor = useRef(new THREE.Color('#404040'))
 
   const lineObj = useMemo(() => {
     const geo = new THREE.BufferGeometry()
@@ -152,7 +152,7 @@ function EdgeLine({ startPos, endPos, highlight, dimmed }: {
       endPos.x, endPos.y, endPos.z,
     ], 3))
     const mat = new THREE.LineBasicMaterial({
-      color: '#a3a3a3',
+      color: '#404040',
       transparent: true,
       opacity: 0.4,
     })
@@ -171,13 +171,13 @@ function EdgeLine({ startPos, endPos, highlight, dimmed }: {
     let tOpacity: number
     if (highlight) {
       tOpacity = 0.75
-      targetColor.current.set('#525252')
+      targetColor.current.set('#2A2A2A')
     } else if (dimmed) {
       tOpacity = 0.06
-      targetColor.current.set('#d4d4d4')
+      targetColor.current.set('#525252')
     } else {
       tOpacity = 0.4
-      targetColor.current.set('#a3a3a3')
+      targetColor.current.set('#404040')
     }
     mat.opacity += (tOpacity - mat.opacity) * 0.08
     mat.color.lerp(targetColor.current, 0.08)
@@ -232,8 +232,8 @@ function OrcNodeMesh({ pos, node, hovered, connected, dimmed, onHover, onUnhover
         <sphereGeometry args={[radius, 16, 16]} />
         <meshStandardMaterial
           ref={matRef}
-          color="#171717"
-          emissive={node.accent ? '#2563eb' : '#525252'}
+          color="#1A1A1A"
+          emissive={node.accent ? '#F2C94C' : '#2A2A2A'}
           emissiveIntensity={node.accent ? 0.15 : 0.06}
           roughness={0.7}
           metalness={0.1}
@@ -350,7 +350,7 @@ function OrchPulse({ posMap, active }: {
     <>
       <mesh ref={meshRef} visible={false}>
         <sphereGeometry args={[0.03, 8, 8]} />
-        <meshBasicMaterial color="#2563eb" transparent opacity={0} />
+        <meshBasicMaterial color="#F2C94C" transparent opacity={0} />
       </mesh>
       {AGENTS.map((agent, i) => {
         const agentPos = posMap.get(agent.id)
@@ -362,7 +362,7 @@ function OrchPulse({ posMap, active }: {
             position={agentPos ?? [0, 0, 0]}
           >
             <sphereGeometry args={[0.035, 8, 8]} />
-            <meshBasicMaterial color="#2563eb" transparent opacity={0} />
+            <meshBasicMaterial color="#F2C94C" transparent opacity={0} />
           </mesh>
         )
       })}

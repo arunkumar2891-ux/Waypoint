@@ -12,6 +12,7 @@ import type { ProfessionalWork } from '@/lib/types'
 
 const DiagnosticPipeline = lazy(() => import('@/components/three/DiagnosticPipeline'))
 const AgentOrchestration = lazy(() => import('@/components/three/AgentOrchestration'))
+const PortalArchitecture = lazy(() => import('@/components/three/PortalArchitecture'))
 
 /* ─── Types ─── */
 
@@ -380,6 +381,15 @@ export function CaseStudyPage({ project, prev, next }: CaseStudyPageProps) {
                       fallback={<WebGLFallback sceneName="Agent Orchestration" />}
                     >
                       <AgentOrchestration reducedMotion={reducedMotion} mobile={mobile} />
+                    </SceneContainer>
+                  </div>
+                ) : project.slug === 'snaplogic-automations-portal' ? (
+                  <div className="cs-arch-visual cs-arch-visual--pipeline" aria-hidden="true">
+                    <SceneContainer
+                      height="h-[420px] md:h-[500px]"
+                      fallback={<WebGLFallback sceneName="Portal Architecture" />}
+                    >
+                      <PortalArchitecture reducedMotion={reducedMotion} mobile={mobile} />
                     </SceneContainer>
                   </div>
                 ) : (

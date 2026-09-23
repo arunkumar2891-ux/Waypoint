@@ -34,11 +34,11 @@ Recommended:
 ## Color
 
 Start restrained:
-- warm/off-white background;
-- near-black foreground;
+- near-black background;
+- off-white foreground;
 - muted gray;
-- one brand accent;
-- subtle neutral borders.
+- yellow accent family;
+- dark neutral borders.
 
 3D scenes inherit this palette.
 

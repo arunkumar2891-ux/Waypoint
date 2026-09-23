@@ -27,7 +27,7 @@ function ThreeFallback() {
   return (
     <mesh>
       <sphereGeometry args={[0.05, 8, 8]} />
-      <meshStandardMaterial color="#d4d4d4" transparent opacity={0.3} />
+      <meshStandardMaterial color="#404040" transparent opacity={0.3} />
     </mesh>
   )
 }
@@ -60,8 +60,8 @@ export function SceneContainer({
             style={{ background: 'transparent' }}
             frameloop={reducedMotion ? 'demand' : 'always'}
           >
-            <ambientLight intensity={0.7} />
-            <pointLight position={[5, 8, 5]} intensity={0.3} />
+            <ambientLight intensity={0.5} />
+            <pointLight position={[5, 8, 5]} intensity={0.4} />
             <Suspense fallback={<ThreeFallback />}>
               {children}
             </Suspense>

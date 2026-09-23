@@ -15,7 +15,7 @@ export default function OGImage() {
           flexDirection: 'column',
           justifyContent: 'center',
           padding: '80px',
-          backgroundColor: '#FAFAF8',
+          backgroundColor: '#0A0A0A',
           fontFamily: 'system-ui, sans-serif',
         }}
       >
@@ -24,7 +24,7 @@ export default function OGImage() {
           style={{
             width: 48,
             height: 4,
-            backgroundColor: '#2563eb',
+            backgroundColor: '#F2C94C',
             marginBottom: 32,
           }}
         />
@@ -34,7 +34,7 @@ export default function OGImage() {
           style={{
             fontSize: 64,
             fontWeight: 700,
-            color: '#171717',
+            color: '#F5F5F0',
             letterSpacing: '-0.03em',
             lineHeight: 1.1,
             marginBottom: 16,
@@ -48,7 +48,7 @@ export default function OGImage() {
           style={{
             fontSize: 24,
             fontWeight: 400,
-            color: '#737373',
+            color: '#A3A3A3',
             lineHeight: 1.4,
             marginBottom: 40,
           }}
@@ -61,7 +61,7 @@ export default function OGImage() {
           style={{
             fontSize: 14,
             fontWeight: 500,
-            color: '#a3a3a3',
+            color: '#737373',
             letterSpacing: '0.12em',
             textTransform: 'uppercase' as const,
           }}

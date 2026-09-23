@@ -38,10 +38,11 @@ alwaysApply: true
 
 ## Design
 
-- Warm off-white background (`#FAFAF8`).
-- Near-black typography (`#171717`).
+- Near-black background (`#0A0A0A`).
+- Off-white typography (`#F5F5F0`).
 - Muted gray supporting elements.
-- Restrained blue accent (`#2563eb`).
+- Restrained yellow accent (`#F2C94C`).
+- Yellow accent variations: bright (`#FFD84D`), soft (`#5C4B16`), deep (`#B08A00`).
 - Editorial, architectural, technical visual language.
 - Structural borders preferred over card shadows.
 - Avoid generic SaaS dashboard aesthetics.

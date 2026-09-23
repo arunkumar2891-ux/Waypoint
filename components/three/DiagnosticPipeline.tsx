@@ -157,7 +157,7 @@ function EdgeLine({ startPos, endPos, highlight, dimmed, failure }: {
   failure?: boolean
 }) {
   const lineRef = useRef<THREE.Line>(null)
-  const targetColor = useRef(new THREE.Color('#a3a3a3'))
+  const targetColor = useRef(new THREE.Color('#404040'))
 
   const lineObj = useMemo(() => {
     const geo = new THREE.BufferGeometry()
@@ -166,7 +166,7 @@ function EdgeLine({ startPos, endPos, highlight, dimmed, failure }: {
       endPos.x, endPos.y, endPos.z,
     ], 3))
     const mat = new THREE.LineBasicMaterial({
-      color: failure ? '#d4d4d4' : '#a3a3a3',
+      color: failure ? '#525252' : '#404040',
       transparent: true,
       opacity: failure ? 0.2 : 0.4,
     })
@@ -185,13 +185,13 @@ function EdgeLine({ startPos, endPos, highlight, dimmed, failure }: {
     let targetOpacity: number
     if (highlight) {
       targetOpacity = failure ? 0.4 : 0.7
-      targetColor.current.set(failure ? '#a3a3a3' : '#525252')
+      targetColor.current.set(failure ? '#404040' : '#2A2A2A')
     } else if (dimmed) {
       targetOpacity = 0.08
-      targetColor.current.set('#d4d4d4')
+      targetColor.current.set('#525252')
     } else {
       targetOpacity = failure ? 0.2 : 0.4
-      targetColor.current.set(failure ? '#d4d4d4' : '#a3a3a3')
+      targetColor.current.set(failure ? '#525252' : '#404040')
     }
     mat.opacity += (targetOpacity - mat.opacity) * 0.08
     mat.color.lerp(targetColor.current, 0.08)
@@ -252,8 +252,8 @@ function PipeNodeMesh({ pos, node, hovered, connected, dimmed, onHover, onUnhove
         <sphereGeometry args={[radius, 16, 16]} />
         <meshStandardMaterial
           ref={matRef}
-          color="#171717"
-          emissive={node.accent ? '#2563eb' : '#525252'}
+          color="#1A1A1A"
+          emissive={node.accent ? '#F2C94C' : '#2A2A2A'}
           emissiveIntensity={node.accent ? 0.15 : 0.06}
           roughness={0.7}
           metalness={0.1}
@@ -312,7 +312,7 @@ function PathPulse({ positions, active }: {
   return (
     <mesh ref={meshRef} visible={false}>
       <sphereGeometry args={[0.03, 8, 8]} />
-      <meshBasicMaterial color="#2563eb" transparent opacity={0} />
+      <meshBasicMaterial color="#F2C94C" transparent opacity={0} />
     </mesh>
   )
 }

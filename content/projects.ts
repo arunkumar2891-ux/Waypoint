@@ -52,7 +52,7 @@ export const personalProjects: PersonalProject[] = [
     slug: 'cric-scorer',
     title: 'Cric-Scorer',
     type: 'personal',
-    status: 'shipped',
+    status: 'active',
     summary:
       'Full-featured cricket tournament management and live ball-by-ball scoring application with complex domain logic engine.',
     problem:

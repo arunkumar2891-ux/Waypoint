@@ -36,7 +36,7 @@ interface ArchEdge {
 }
 
 /* Tier visual Y positions — stacked top-to-bottom */
-const TIER_Y = { portal: 1.3, api: 0.45, 'data-ai': -0.4, platform: -1.25 } as const
+const TIER_Y = { portal: 1.3, api: 0.75, 'data-ai': 0.00, platform: -0.75, ops: -1.5 } as const
 
 const NODES: ArchNode[] = [
   /* Tier 1 — Portal / UI */
@@ -50,11 +50,14 @@ const NODES: ArchNode[] = [
   { id: 'pubsub', label: 'Pub/Sub',          tier: 'data-ai',  base: [0, TIER_Y['data-ai'], 0],             driftPhase: 2.6 },
   { id: 'vertai', label: 'Vertex AI',        tier: 'data-ai',  base: [0.85, TIER_Y['data-ai'], 0],          driftPhase: 3.2 },
 
-  /* Tier 4 — Platform & Ops */
+  /* Tier 4 — Platform */
   { id: 'k8s',    label: 'Kubernetes',       tier: 'platform',  base: [-1.05, TIER_Y.platform, 0],           driftPhase: 3.8 },
   { id: 'vault',  label: 'Vault',            tier: 'platform',  base: [-0.35, TIER_Y.platform, 0],           driftPhase: 4.4 },
-  { id: 'dd',     label: 'Datadog',          tier: 'platform',  base: [0.35, TIER_Y.platform, 0],            driftPhase: 5.0 },
-  { id: 'jira',   label: 'JIRA / Slack',     tier: 'platform',  base: [1.05, TIER_Y.platform, 0],            driftPhase: 5.6 },
+  { id: 'snaplogic',  label: 'Snaplogic',    tier: 'platform',  base: [0.35, TIER_Y.platform, 0],           driftPhase: 5.0 },
+  { id: 'dd',     label: 'Datadog',          tier: 'platform',  base: [1.05, TIER_Y.platform, 0],            driftPhase: 5.6 },
+  
+  /* Tier 5 — Ops */
+  { id: 'jira',   label: 'JIRA / Slack',     tier: 'ops',  base: [0, TIER_Y.ops, 0],            driftPhase: 6.2 },
 ]
 
 /* Structural grouping edges — documented relationships only:
@@ -65,10 +68,13 @@ const EDGES: ArchEdge[] = [
   { from: 'portal', to: 'api' },
   { from: 'api',    to: 'bq' },
   { from: 'api',    to: 'pubsub' },
+  { from: 'pubsub',    to: 'snaplogic' },
+  { from: 'snaplogic',    to: 'jira' },
   { from: 'api',    to: 'vertai' },
   { from: 'api',    to: 'jira' },
   { from: 'k8s',    to: 'vault' },
   { from: 'k8s',    to: 'dd' },
+  { from: 'dd',    to: 'vault' },
 ]
 
 /* ─── Constants ─── */
@@ -85,7 +91,7 @@ function EdgeLine({ startPos, endPos, highlight, dimmed }: {
   dimmed: boolean
 }) {
   const lineRef = useRef<THREE.Line>(null)
-  const targetColor = useRef(new THREE.Color('#d4d4d4'))
+  const targetColor = useRef(new THREE.Color('#404040'))
 
   const lineObj = useMemo(() => {
     const geo = new THREE.BufferGeometry()
@@ -97,7 +103,7 @@ function EdgeLine({ startPos, endPos, highlight, dimmed }: {
       ], 3)
     )
     const mat = new THREE.LineBasicMaterial({
-      color: '#d4d4d4',
+      color: '#404040',
       transparent: true,
       opacity: 0.18,
     })
@@ -116,13 +122,13 @@ function EdgeLine({ startPos, endPos, highlight, dimmed }: {
     let targetOpacity: number
     if (highlight) {
       targetOpacity = 0.45
-      targetColor.current.set('#737373')
+      targetColor.current.set('#2A2A2A')
     } else if (dimmed) {
       targetOpacity = 0.04
-      targetColor.current.set('#e5e5e5')
+      targetColor.current.set('#525252')
     } else {
       targetOpacity = 0.18
-      targetColor.current.set('#d4d4d4')
+      targetColor.current.set('#404040')
     }
     mat.opacity += (targetOpacity - mat.opacity) * 0.07
     mat.color.lerp(targetColor.current, 0.07)
@@ -181,8 +187,8 @@ function ArchNodeMesh({ pos, node, hovered, connected, dimmed, onHover, onUnhove
         <sphereGeometry args={[NODE_RADIUS, 16, 16]} />
         <meshStandardMaterial
           ref={matRef}
-          color="#171717"
-          emissive="#2563eb"
+          color="#1A1A1A"
+          emissive="#F2C94C"
           emissiveIntensity={node.primary ? 0.12 : 0.06}
           roughness={0.7}
           metalness={0.1}
@@ -218,7 +224,7 @@ function TierLine({ y, width }: { y: number; width: number }) {
       ], 3)
     )
     const mat = new THREE.LineBasicMaterial({
-      color: '#e5e5e5',
+      color: '#525252',
       transparent: true,
       opacity: 0.15,
     })

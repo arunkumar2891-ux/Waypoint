@@ -58,7 +58,7 @@ function EdgeLine({ startPos, endPos, highlight, dimmed }: {
   dimmed: boolean
 }) {
   const lineRef = useRef<THREE.Line>(null)
-  const targetColor = useRef(new THREE.Color('#d4d4d4'))
+  const targetColor = useRef(new THREE.Color('#404040'))
 
   const lineObj = useMemo(() => {
     const geo = new THREE.BufferGeometry()
@@ -70,7 +70,7 @@ function EdgeLine({ startPos, endPos, highlight, dimmed }: {
       ], 3)
     )
     const mat = new THREE.LineBasicMaterial({
-      color: '#d4d4d4',
+      color: '#404040',
       transparent: true,
       opacity: 0.2,
     })
@@ -90,13 +90,13 @@ function EdgeLine({ startPos, endPos, highlight, dimmed }: {
 
     if (highlight) {
       targetOpacity = 0.5
-      targetColor.current.set('#737373')
+      targetColor.current.set('#2A2A2A')
     } else if (dimmed) {
       targetOpacity = 0.05
-      targetColor.current.set('#e5e5e5')
+      targetColor.current.set('#525252')
     } else {
       targetOpacity = 0.2
-      targetColor.current.set('#d4d4d4')
+      targetColor.current.set('#404040')
     }
 
     mat.opacity += (targetOpacity - mat.opacity) * 0.07
@@ -166,7 +166,7 @@ function DomainNodeMesh({ pos, node, hovered, dimmed, onHover, onUnhover, mobile
         <ringGeometry args={[NODE_RADIUS * 1.5, NODE_RADIUS * 1.75, 24]} />
         <meshBasicMaterial
           ref={ringMatRef}
-          color="#2563eb"
+          color="#F2C94C"
           transparent
           opacity={(node.anchor || node.accent) ? 0.1 : 0}
           side={THREE.DoubleSide}
@@ -181,8 +181,8 @@ function DomainNodeMesh({ pos, node, hovered, dimmed, onHover, onUnhover, mobile
         <sphereGeometry args={[NODE_RADIUS, 20, 20]} />
         <meshStandardMaterial
           ref={matRef}
-          color="#171717"
-          emissive="#2563eb"
+          color="#1A1A1A"
+          emissive="#F2C94C"
           emissiveIntensity={node.anchor || node.accent ? 0.12 : 0.05}
           roughness={0.7}
           metalness={0.1}

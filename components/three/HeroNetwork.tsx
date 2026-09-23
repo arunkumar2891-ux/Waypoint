@@ -80,7 +80,7 @@ function EdgeLine({ startPos, endPos, weight, highlight, dimmed }: {
       ], 3)
     )
     const mat = new THREE.LineBasicMaterial({
-      color: '#a3a3a3',
+      color: '#404040',
       transparent: true,
       opacity: weight === 2 ? 0.25 : 0.14,
     })
@@ -105,10 +105,10 @@ function EdgeLine({ startPos, endPos, weight, highlight, dimmed }: {
       targetColor = '#737373'
     } else if (dimmed) {
       targetOpacity = 0.06
-      targetColor = '#d4d4d4'
+      targetColor = '#1A1A1A'
     } else {
       targetOpacity = baseOpacity
-      targetColor = '#a3a3a3'
+      targetColor = '#404040'
     }
 
     mat.opacity += (targetOpacity - mat.opacity) * 0.07
@@ -150,7 +150,7 @@ function TravelPulse({ startPos, endPos, active }: {
   return (
     <mesh ref={meshRef}>
       <sphereGeometry args={[0.014, 6, 6]} />
-      <meshBasicMaterial ref={matRef} color="#2563eb" transparent opacity={0} />
+      <meshBasicMaterial ref={matRef} color="#F2C94C" transparent opacity={0} />
     </mesh>
   )
 }
@@ -218,7 +218,7 @@ function NetworkNode({ pos, node, hovered, dimmed, onHover, onUnhover }: {
         <ringGeometry args={[baseRadius * 1.4, baseRadius * 1.65, 32]} />
         <meshBasicMaterial
           ref={ringMatRef}
-          color="#2563eb"
+          color="#F2C94C"
           transparent
           opacity={node.primary ? 0.1 : 0}
           side={THREE.DoubleSide}
@@ -234,8 +234,8 @@ function NetworkNode({ pos, node, hovered, dimmed, onHover, onUnhover }: {
         <sphereGeometry args={[baseRadius, 24, 24]} />
         <meshStandardMaterial
           ref={sphereMatRef}
-          color="#171717"
-          emissive="#2563eb"
+          color="#1A1A1A"
+          emissive="#F2C94C"
           emissiveIntensity={node.primary ? 0.18 : 0.06}
           roughness={0.7}
           metalness={0.1}
