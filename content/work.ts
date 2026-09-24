@@ -420,4 +420,57 @@ export const professionalWork: ProfessionalWork[] = [
     category: ['GenAI / AI Agents'],
     order: 7,
   },
+  {
+    slug: 'snaplogic-naming-conventions-agent',
+    title: 'SnapLogic Naming Conventions Agent',
+    type: 'professional',
+    role: 'AI Agent Developer',
+    employer: 'Palo Alto Networks',
+    summary:
+      'Built a single-purpose LlmAgent using Google ADK that automatically renames SnapLogic pipeline snaps according to established CoE naming conventions — tracing execution order via link_map and generating sequentially numbered labels.',
+    context:
+      'After pipeline development in the Dev environment, snaps needed to be renamed to comply with established naming standards before promotion. This manual renaming process was repetitive, error-prone, and slowed down the development-to-promotion cycle.',
+    challenge:
+      'Parsing complete SnapLogic pipeline JSON, tracing execution order through link_map relationships (src_id → dst_id), and generating correctly sequenced snap labels while preserving the exact JSON structure with only 4 metadata fields modified.',
+    architecture:
+      'Single LlmAgent architecture using Google ADK with no sub-agents. Agent receives complete SnapLogic pipeline JSON, traces execution order via link_map (src_id → dst_id), and renames all enabled snaps using the naming standard: Number_ShapeType-Description.\n\nSequential numbering in multiples of 10 (10, 20, 30…) for execution snaps, multiples of 5 (15, 25…) for logging snaps. Only 4 metadata fields updated: pipeline purpose, pipeline notes, snap label, and snap notes. All other JSON structure preserved exactly.\n\nModel routing via custom GlobalGemini class routing to Google\'s global endpoint for Gemini 3.5 Flash. Output is minified JSON with link_map removed, ready for direct re-import into SnapLogic.',
+    implementation: [
+      'Built single-purpose LlmAgent using Google ADK that analyzes complete SnapLogic pipeline JSON and renames snaps to CoE naming standards',
+      'Implemented execution order tracing via link_map (src_id → dst_id) to determine correct sequential numbering of snaps',
+      'Enforced naming standard: Number_ShapeType-Description with sequential numbering in multiples of 10, logging snaps in multiples of 5',
+      'Designed strict behavioral constraints: only enabled snaps processed, disabled snaps ignored, only 4 metadata fields updated',
+      'Auto-generates pipeline purpose, pipeline notes, and per-snap notes describing each snap\'s function within the pipeline',
+      'Implemented custom GlobalGemini class routing model calls to Google\'s global endpoint for Gemini 3.5 Flash availability',
+      'Output is minified JSON maintaining exact input skeleton with link_map removed, ready for direct re-import',
+    ],
+    impact: [
+      'Automated manual snap renaming process to CoE standards',
+      'Eliminates human error in naming convention compliance',
+      'Generates pipeline documentation (purpose, notes) automatically',
+      'Reduces development-to-promotion cycle time',
+      '~99.6% reduction in developer hours: 2–4 hours manual effort down to 30–60 seconds per pipeline',
+    ],
+    technicalHighlights: [
+      'Google ADK LlmAgent with structured JSON input/output',
+      'Pipeline execution order tracing via link_map graph',
+      'Custom GlobalGemini class for global endpoint routing',
+      'Strict 4-field-only update constraint preserving JSON fidelity',
+    ],
+    technologies: [
+      'Google ADK',
+      'Gemini 3.5 Flash',
+      'Google Cloud Agent Engine',
+      'Vertex AI Reasoning Engine',
+      'SnapLogic',
+      'Python',
+    ],
+    metrics: [
+      { label: 'Time Before', value: '2–4 hrs' },
+      { label: 'Time After', value: '30–60s' },
+      { label: 'Developer Hours Saved', value: '~99.6%' },
+    ],
+    featured: false,
+    category: ['GenAI / AI Agents'],
+    order: 8,
+  },
 ]

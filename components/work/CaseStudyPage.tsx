@@ -156,6 +156,14 @@ function extractBeforeAfter(project: ProfessionalWork): BeforeAfterPair[] {
     }
   }
 
+  if (project.slug === 'snaplogic-naming-conventions-agent') {
+    const before = m.find((x) => x.label === 'Time Before')
+    const after = m.find((x) => x.label === 'Time After')
+    if (before && after) {
+      pairs.push({ label: 'Naming Compliance Time', before: before.value, after: after.value })
+    }
+  }
+
   return pairs
 }
 

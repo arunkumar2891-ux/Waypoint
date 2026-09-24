@@ -278,6 +278,40 @@ Portal Technical Specifications:
 
 	·     Output: Structured JSON (overall_status, critical_violations, warnings, category_breakdown, action_plan)
 
+	**Project: SnapLogic Naming Conventions Agent (Google ADK — LlmAgent)**
+
+	**Role:** AI Agent Developer
+
+	**Technologies:** Google ADK (Python), Gemini 3.5 Flash, Google Cloud Agent Engine (Vertex AI Reasoning Engine), SnapLogic
+
+	·     Built a single-purpose LlmAgent using Google ADK that automatically renames SnapLogic pipeline snaps according to established CoE naming conventions after development is completed in Dev environment
+
+	·     Achieved ~99.6% reduction in developer hours: manual naming compliance taking 2–4 hours reduced to 30–60 seconds per pipeline
+
+	·     Implemented comprehensive naming enforcement: sequential numbering (10, 20, 30…) in execution order with gap of 10, logging snaps in multiples of 5 (15, 25…), format: Number_ShapeType-Description
+
+	·     Agent analyzes complete pipeline JSON, traces execution order via link_map (src_id → dst_id), and generates auto-numbered snap labels, pipeline purpose, pipeline notes, and per-snap notes
+
+	·     Designed strict behavioral constraints: only enabled snaps processed, only 4 metadata fields updated (pipeline purpose, pipeline notes, snap label, snap notes), all other JSON structure preserved exactly
+
+	·     Implemented custom GlobalGemini class routing model calls to Google's global endpoint for Gemini 3.5 Flash regional availability
+
+	·     Output is minified JSON maintaining exact input skeleton with link_map removed, ready for direct re-import into SnapLogic
+
+	Agent Technical Specifications:
+
+	·     Platform: Google Cloud Agent Engine (Vertex AI Reasoning Engine)
+
+	·     Architecture: Single LlmAgent (no sub-agents)
+
+	·     Model: Gemini 3.5 Flash via GlobalGemini (global endpoint routing)
+
+	·     Input: Complete SnapLogic Pipeline JSON
+
+	·     Output: Modified pipeline JSON with renamed snaps, updated notes, link_map removed
+
+	·     Naming Standard: Number_ShapeType-Description (10, 20, 30… for execution; 15, 25… for logging)
+
 # *Security & Compliance*
 
 ·     Identified and resolved 3 security vulnerabilities through proactive code review and security scanning integration:  
@@ -861,6 +895,7 @@ SASTRA University
 | Automations Portal (AI-Built) | 99.95% uptime, \<300ms response | 100+ users, 35+ APIs |
 | Quote Journey Tracker Agent | 85-90% faster (3-4 min→30-40 sec) | 540+ hrs/year saved, ~$40K value, 2000-3000% ROI |
 | Multi-Agent Pipeline Review (ADK) | ~90% perf improvement, 100% rule coverage | 6 parallel sub-agents, structured JSON, built with Cursor AI |
+| Naming Conventions Agent (ADK) | ~99.6% time saved (2-4 hrs → 30-60s) | Single LlmAgent, Gemini 3.5 Flash, pipeline JSON in/out |
 | RAG Corpus Optimization | 40% → \<5% AI review inconsistency | 58→20 clusters, v3.0 |
 | Critical Incident Response | \<2hr resolution, $0 business impact | Quarter-end period |
 | CareerPilot AI (Personal) | Autonomous GenAI job search platform | Gemini 3.6 \+ Groq, RAG, 18-node pipeline |
