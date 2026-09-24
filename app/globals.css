@@ -434,12 +434,12 @@ body {
   position: relative;
   width: 220px;
   height: 220px;
-  padding: 3px;
+  padding: 2px;
   background: linear-gradient(
     135deg,
     var(--color-accent) 0%,
-    var(--color-border-strong) 40%,
-    var(--color-border) 100%
+    rgba(242, 201, 76, 0.3) 25%,
+    var(--color-background) 55%
   );
 }
 
