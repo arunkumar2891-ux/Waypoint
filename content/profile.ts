@@ -10,7 +10,7 @@ export const profile: Profile = {
   ],
   location: 'Chennai, Tamil Nadu',
   summary:
-    'Results-driven Integration Architect and GenAI-native developer with 10+ years of experience in enterprise software engineering. Proven track record of leading large-scale initiatives at Palo Alto Networks, delivering measurable business impact including 66% infrastructure reduction, 4-10x performance improvements, and internal platforms serving 100+ users.',
+    'Results-driven Integration Architect and GenAI-native developer with 10+ years of experience in enterprise software engineering. Proven track record of leading large-scale initiatives at Palo Alto Networks, delivering measurable business impact including 66% infrastructure reduction, 4-10x performance improvements, and internal platforms serving 15+ users.',
   email: 'arunkumarjs@outlook.com',
   linkedin: 'https://www.linkedin.com/in/arunkumar-j-s-05164393/',
   github: 'https://github.com/arunkumar2891-ux',
@@ -20,7 +20,7 @@ export const heroMetrics: Metric[] = [
   { label: 'Years Experience', value: '10+' },
   { label: 'Snap Reduction', value: '66%' },
   { label: 'Query Latency', value: '4–10×' },
-  { label: 'Platform Users', value: '100+' },
+  { label: 'Platform Users', value: '15+' },
   { label: 'Uptime', value: '99.95%' },
 ]
 
