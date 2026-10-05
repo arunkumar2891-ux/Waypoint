@@ -85,7 +85,7 @@ export const personalProjects: PersonalProject[] = [
   },
   {
     slug: 'pic-reel',
-    title: 'Pic-Reel / FrameFlow',
+    title: 'FrameFlow',
     type: 'personal',
     status: 'shipped',
     summary:

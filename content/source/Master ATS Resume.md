@@ -14,7 +14,7 @@ GitHub: https://github.com/arunkumar2891-ux
 
 # **PROFESSIONAL SUMMARY**
 
-Results-driven Integration Architect and GenAI-native developer with 10+ years of experience in enterprise software engineering and 9+ years specializing in integration platform architecture, cloud solutions, and 1+ year in AI-augmented full-stack application development. Proven track record of leading large-scale initiatives at Palo Alto Networks, delivering measurable business impact including 66% infrastructure reduction, 4-10x performance improvements, and internal platforms serving 20+ users. Expert in SnapLogic iPaaS, Google Cloud Platform (GCP), and Generative AI (Gemini, Cursor AI, ChatGPT). Built and deployed production AI agents including a RAG-powered diagnostic agent on GCP Agent Studio (85-90% faster investigations) and a multi-agent pipeline review system using Google ADK with ParallelAgent orchestration (6 concurrent sub-agents, ~90% performance improvement). Pioneered AI-augmented development workflows, shipping production-grade applications from concept to deployment in days instead of months. Strong forward deployment engineer with ability to translate real-world problems into working software, debug complex distributed systems, and bridge the gap between technical solutions and end-user needs. Demonstrated ability in architectural design, cross-functional collaboration, crisis management, mentoring, and driving operational excellence in fast-paced enterprise environments.
+Results-driven Integration Architect and GenAI-native developer with 10+ years of experience in enterprise software engineering and 9+ years specializing in integration platform architecture, cloud solutions, and 1+ year in AI-augmented full-stack application development. Proven track record of leading large-scale initiatives at Palo Alto Networks, delivering measurable business impact including 66% infrastructure reduction, 4-10x performance improvements, and internal platforms serving 20+ users. Expert in SnapLogic iPaaS, Google Cloud Platform (GCP), and Generative AI (Gemini, Cursor AI, ChatGPT). Built and deployed production AI agents including a RAG-powered diagnostic agent on GCP Agent Studio (85-90% faster investigations) and a multi-agent pipeline review system using Google ADK with ParallelAgent orchestration (6 concurrent sub-agents, ~90% performance improvement). Designed and built a full-stack compliance platform (NestJS 11 + React 19) automating an ITGC/SOX privileged access recertification control end to end — 8 screens, 36 REST endpoints, append-only audit trail, and deterministic audit evidence generation validated against 1,105 real access lines. Pioneered AI-augmented development workflows, shipping production-grade applications from concept to deployment in days instead of months. Strong forward deployment engineer with ability to translate real-world problems into working software, debug complex distributed systems, and bridge the gap between technical solutions and end-user needs. Demonstrated ability in architectural design, cross-functional collaboration, crisis management, mentoring, and driving operational excellence in fast-paced enterprise environments.
 
 # **CORE COMPETENCIES**
 
@@ -25,6 +25,14 @@ Results-driven Integration Architect and GenAI-native developer with 10+ years o
 * Microservices | RESTful APIs | Middleware Design | ETL/ELT Pipelines  
 * System Design | High Availability | Scalability | Fault Tolerance  
 * Solution Architecture | Technical Specifications | Architecture Governance
+
+**Compliance & Audit Platform Engineering:**
+
+* ITGC / SOX Access Controls | User Access Review (UAR) | Access Recertification
+* Append-Only Audit Trails | Decision Provenance | SSO-Resolved Actor Attribution
+* Deterministic Evidence Generation | Byte-Identical Exports | SHA-256 Integrity Manifests
+* Server-Side Control Enforcement | Segregation of Duties | No Self-Attestation
+* Defensible Scheduling | Reviewer Attestation Workflows | Reminder & Escalation Cadences
 
 **Cloud & Infrastructure:**
 
@@ -311,6 +319,78 @@ Portal Technical Specifications:
 	·     Output: Modified pipeline JSON with renamed snaps, updated notes, link_map removed
 
 	·     Naming Standard: Number_ShapeType-Description (10, 20, 30… for execution; 15, 25… for logging)
+
+**Project: Attest — Workday Access Recertification Platform (Full-Stack Compliance Application)**
+
+**Role:** Full-Stack Developer, Solution Architect
+
+**Technologies:** NestJS 11, Node.js 22, TypeScript 5.7, React 19, Vite 7, Tailwind CSS v4, React Query 5, React Router 7, Google Firestore, Zod 4, class-validator, OIDC SSO, Jest, Helm, Kubernetes, Harness CI/CD, Vault
+
+·     Designed and built a full-stack access recertification platform automating the quarterly user access review (UAR) of privileged Workday security groups — an ITGC/SOX access control — covering import, owner assignment, reviewer certification, reminder campaigns, and generation of the CSV evidence pack that satisfies the control
+
+·     Delivered 8 production screens end to end (Import, Owners, Assign, Campaign, Email, Reviewer, Export, Runbook) backed by 11 NestJS controllers exposing 36 REST API endpoints
+
+·     Architected the Firestore data model with 12 entity schemas, 12 corresponding services, and 9 composite indexes, structuring cycle population as subcollections while persons and audit events persist at the root to outlive any single review cycle
+
+·     Implemented an append-only audit log spanning 19 distinct audited actions with the actor always resolved from the SSO identity and never from a request body, making decision provenance impossible to forge or backdate
+
+·     Established two deliberately duplicated validation boundaries: class-validator DTOs at the HTTP edge with whitelist and forbidNonWhitelisted rejecting unknown fields outright, and Zod validation at the Firestore edge on both read and write paths
+
+·     Built the parsing core as pure, dependency-free functions taking an injected extract date rather than reading the system clock, making exports reproducible and preventing dormancy thresholds from drifting day to day
+
+·     Engineered a byte-identical CSV export engine to specification (UTF-8 with BOM, CRLF line endings, all fields quoted, embedded quotes doubled, no generation timestamp) producing 4 evidence exports: full population, decisions, revocations, and auto-closed accounts
+
+·     Delivered an evidence pack bundling all exports with the original source workbook in a ZIP archive accompanied by a JSON manifest carrying per-file row counts and SHA-256 integrity hashes for audit verification
+
+·     Enforced 8 review rules server-side with dedicated test coverage: justification mandatory on revoke, no partial submission, no self-attestation, auto-closed lines accept no decision, closed-cycle write rejection, SSO-resolved audit identity, secondary-approver access after due date, and job-based revoke routed to HR
+
+·     Implemented reviewer magic links as 32-byte cryptographically random tokens, SHA-256 hashed at rest, single-use, bound to person and cycle, and expiring at the cycle due date
+
+·     Designed a 5-step reminder cadence stored as an anchor plus day offset rather than fixed dates, keeping the schedule defensible when a due date is extended after launch, with failed deliveries recorded rather than discarded as distinct audit evidence
+
+·     Solved runtime configuration for a build-time-inlined client bundle by injecting a whitelisted environment block into the served HTML per request, allowing a single container image to remain valid across all 5 deployment environments
+
+·     Hardened the public configuration surface as an explicit whitelist rather than a filter of known secrets, with automated tests asserting no key matching SECRET, KEY, TOKEN, PASSWORD, CREDENTIAL, or PRIVATE can reach the browser
+
+·     Diagnosed and remediated a critical boot-time configuration defect where the authentication gate evaluated its issuer at module scope before configuration was populated, leaving deployed endpoints serving unauthenticated while logs reported a healthy start
+
+·     Replaced silent environment-name fallthrough with an explicit boot-time failure, on the principle that failing to start is preferable to starting unauthenticated
+
+·     Built a local OIDC provider for development (discovery, authorization code with verified PKCE, token, userinfo, JWKS, logout) excluded from the production build, unblocking reviewer and role-based flows ahead of enterprise identity-provider registration
+
+·     Achieved 596 automated test cases (393 server, 203 client) including an acceptance suite pinned to a fixed extract date so results remain stable over time
+
+·     Shipped WCAG AA-compliant light and dark themes driven by a single attribute where the dark layer overrides design tokens only and restates no component rules, with contrast ratios enforced by automated test
+
+·     Delivered phases 1 through 4 (import pipeline, admin screens, reviewer experience, campaign and email); phase 5 remaining is UAT and defect fixing
+
+Platform Technical Specifications:
+
+·     Backend: NestJS 11, Node.js 22, TypeScript, 11 controllers, 36 REST endpoints
+
+·     Frontend: React 19, Vite 7, Tailwind CSS v4 (CSS-first), React Query, 8 design-system primitives, 8 screens
+
+·     Database: Google Firestore — 12 entity schemas, 12 services, 9 composite indexes, application-level sort keys
+
+·     Audit: Append-only log, 19 audited actions, SSO-resolved actors, no update or delete path
+
+·     Exports: 4 deterministic CSVs plus ZIP evidence pack with SHA-256 JSON manifest
+
+·     Security: OIDC SSO, group-based RBAC, hashed single-use magic links, 8 server-enforced review rules
+
+·     Testing: 596 test cases (393 server Jest, 203 client Jest + React Testing Library)
+
+·     Deployment: Helm chart across 5 environments (dev/sit/qa/stg/prd), Harness CI/CD, Vault secret injection, GitHub Actions quality gate
+
+Pilot Validation (real Workday extract, fixed extract date):
+
+·     52 security groups | 1,105 access lines | 589 distinct people | 648 distinct accounts
+
+·     96 auto-closed (disabled accounts) | 1,009 lines routed to reviewer certification
+
+·     Exception classification: 20 system accounts, 2 confirmed leavers, 11 never signed on, 8 dormant beyond 90 days
+
+·     Derived review cycle correctly labelled Q1 FY27 from the extract date
 
 # *Security & Compliance*
 
@@ -678,11 +758,15 @@ PROBLEM IDENTIFICATION & REQUIREMENTS ENGINEERING:
 
 ·     Identified legacy logging risk → prevented critical incident
 
+·     Received audit/compliance requirement (quarterly privileged access review) → built Attest recertification platform producing the ITGC evidence pack
+
 PRODUCTION DEBUGGING & DEPLOYMENT:
 
 ·     Debugged CareerPilot production drift (jobs vs resumes vs Google Drive) with repair\_sync and OAuth token refresh/reconnect flows on live Render \+ Supabase deployment
 
 ·     Diagnosed Kong gateway "no Route matched" error in Kubernetes cluster by tracing request path from DNS → Ingress → Service → Pod, identifying missing Ingress template
+
+·     Diagnosed a silent authentication bypass in Attest where the auth gate read its issuer at module scope before configuration was populated — deployed endpoints served unauthenticated while the boot log reported healthy; replaced the silent fallthrough with a boot-time failure
 
 ·     Identified Harness CI trigger filter (deployment/.\* exclusion) preventing build on infrastructure-only changes through systematic analysis of webhook delivery \+ payload conditions
 
@@ -764,6 +848,18 @@ Integration Platforms:
 
 ·     API & Middleware: Postman, SOAPUI, Azure APIM, Kafka
 
+Application Frameworks:
+
+·     NestJS 11: Modules, Dependency Injection, Guards, Interceptors, Exception Filters, Validation Pipes, Swagger/OpenAPI
+
+·     Node.js 22 | Express.js | TypeScript 5.7 (strict)
+
+·     React 19 | React 18: Hooks, Context, Suspense, Lazy Loading
+
+·     Vite 7 | Tailwind CSS v4 (CSS-first) | React Query (TanStack) | React Router 7
+
+·     Schema Validation: Zod, class-validator | Design Systems & Component Libraries
+
 Databases & Data:
 
 ·     Google BigQuery: Schema Design, MERGE/DML, Partitioning, Clustering, ML
@@ -779,6 +875,8 @@ Databases & Data:
 Cloud Platforms:
 
 ·     Google Cloud Platform (GCP): Pub/Sub, BigQuery, Vertex AI, GKE, Cloud Functions, Cloud Storage, IAM
+
+·     Google Firestore: Schema Design, Subcollections, Composite Indexes, Batch Writes, Deterministic Ordering
 
 ·     Microsoft Azure: Azure Functions, Azure APIM, Azure Application Insights
 
@@ -838,6 +936,8 @@ Security:
 
 ·     SOC 2 | GDPR | Compliance Frameworks
 
+·     ITGC / SOX Access Controls: User Access Review (UAR), Access Recertification, Segregation of Duties, Append-Only Audit Trails, Evidence Pack Generation
+
 Tools & Platforms:
 
 ·     JIRA | Confluence | Slack | Git | GitHub
@@ -896,6 +996,7 @@ SASTRA University
 | Quote Journey Tracker Agent | 85-90% faster (3-4 min→30-40 sec) | 540+ hrs/year saved, ~$40K value, 2000-3000% ROI |
 | Multi-Agent Pipeline Review (ADK) | ~90% perf improvement, 100% rule coverage | 6 parallel sub-agents, structured JSON, built with Cursor AI |
 | Naming Conventions Agent (ADK) | ~99.6% time saved (2-4 hrs → 30-60s) | Single LlmAgent, Gemini 3.5 Flash, pipeline JSON in/out |
+| Attest Access Recertification | ITGC/SOX evidence automation, byte-identical exports | 1,105 access lines, 36 APIs, 8 screens, 596 tests |
 | RAG Corpus Optimization | 40% → \<5% AI review inconsistency | 58→20 clusters, v3.0 |
 | Critical Incident Response | \<2hr resolution, $0 business impact | Quarter-end period |
 | CareerPilot AI (Personal) | Autonomous GenAI job search platform | Gemini 3.6 \+ Groq, RAG, 18-node pipeline |

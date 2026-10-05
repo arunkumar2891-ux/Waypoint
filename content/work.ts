@@ -9,7 +9,7 @@ export const professionalWork: ProfessionalWork[] = [
     employer: 'Palo Alto Networks',
     timeline: 'Jul 2024 – Present',
     summary:
-      'Designed, developed, and deployed a comprehensive internal developer portal serving 100+ team members with self-service SnapLogic pipeline operations.',
+      'Designed, developed, and deployed a comprehensive internal developer portal serving 15+ team members with self-service SnapLogic pipeline operations.',
     context:
       'Internal teams needed self-service access to SnapLogic pipeline operations, reducing manual ticket creation and support burden.',
     challenge:
@@ -28,7 +28,7 @@ export const professionalWork: ProfessionalWork[] = [
       'Built self-service user registration system with OTP-based authentication, session management, and role-based access control',
     ],
     impact: [
-      '100+ users actively using the platform',
+      '15+ users actively using the platform',
       '35+ REST API endpoints across 5 domains',
       '99.95% uptime, exceeding 99.9% target',
       '<300ms API response times',
@@ -58,7 +58,7 @@ export const professionalWork: ProfessionalWork[] = [
       'Datadog APM',
     ],
     metrics: [
-      { label: 'Users', value: '100+' },
+      { label: 'Users', value: '15+' },
       { label: 'API Endpoints', value: '35+' },
       { label: 'Uptime', value: '99.95%' },
       { label: 'API Response', value: '<300ms' },
@@ -67,6 +67,90 @@ export const professionalWork: ProfessionalWork[] = [
     category: ['AI + Platform Engineering'],
     visualizationType: 'service-graph',
     order: 1,
+  },
+  {
+    slug: 'attest-access-recertification',
+    title: 'Project Attest — Access Recertification',
+    type: 'professional',
+    role: 'Full-Stack Developer, Solution Architect',
+    employer: 'Palo Alto Networks',
+    timeline: 'Jul 2024 – Present',
+    summary:
+      'Designed and built a full-stack access recertification platform that turns a quarterly privileged-access review of Workday security groups into a reproducible, audit-defensible evidence pack — 8 screens, 36 API endpoints, and 596 tests covering an append-only audit trail.',
+    context:
+      'Quarterly user access review (UAR) of privileged Workday security groups is an ITGC access control. An administrator imports the Workday extract, each security group is assigned a business owner, the owners certify every account as retain or revoke, and the system produces the CSV evidence that satisfies the control.',
+    challenge:
+      'The output is audit evidence, not a report. That turns two properties into hard requirements rather than nice-to-haves: the exports must regenerate byte-identically on demand, and the identity behind every decision must be impossible to forge or backdate. Both constraints reach back into parsing, storage ordering, and the request boundary.',
+    architecture:
+      'NestJS 11 on Node 22 backend with a React 19 + Vite 7 + Tailwind v4 client, compiled and served as static output by the API so one container image covers every environment.\n\nPersistence is Firestore with 12 entity schemas and 12 corresponding services, backed by 9 composite indexes. Cycles own their population as subcollections — security groups, lines, decisions, auto-dispositions, assignments, magic links, notifications, fulfilments — while persons and audit events live at the root and outlive any single cycle.\n\nTwo validation boundaries are duplicated deliberately: class-validator DTOs at the HTTP edge with whitelist and forbidNonWhitelisted rejecting unknown fields outright, and Zod at the Firestore edge validating on the way in and on the way out, so a document written by a script or an older build cannot poison a read.\n\nThe import is parse-then-commit. Preview parses and classifies entirely in memory and persists nothing, returning a preview id; commit writes the previewed population as the cycle baseline. Re-importing always creates a new cycle and never mutates an existing one.\n\nThe audit log is append-only by construction — the audit service exposes no update or delete method — and spans 19 distinct audited actions. The actor is always resolved from the SSO identity, never read from a request body.',
+    implementation: [
+      'Built the parsing core as pure, dependency-free functions that take an injected extract date rather than reading the clock — the property that makes exports reproducible and keeps sign-on thresholds from drifting day to day',
+      'Matched spreadsheet headers by normalized name rather than position, so irregular and reordered columns in the source extract parse identically',
+      'Encoded the extract\'s real conventions rather than the expected ones: booleans arrive as blank-or-Yes and never as No, so absent, empty, and No all resolve to false',
+      'Resolved last sign-on per account rather than per row, so one person holding six groups carries one sign-on date across all six — non-null beats null, more recent wins',
+      'Gated the leaver flag on having an email and not being external, which is what separates genuine leavers from system and partner accounts sharing the same blank status',
+      'Wrote an explicit sort key onto every document, because Firestore guarantees no ordering across paginated queries and the evidence CSVs must regenerate byte-identically — ordering is an application-level property here, not a query-time one',
+      'Built the CSV engine to a byte-level specification: UTF-8 with BOM, CRLF including the trailing row, every field always quoted, embedded quotes doubled, and no generation timestamp anywhere in the output',
+      'Delivered 4 evidence exports — full population, decisions, revocations, and auto-closed accounts — plus an evidence pack bundling them with the original workbook in a store-only ZIP and a JSON manifest carrying per-file row counts and SHA-256 hashes',
+      'Derived remediation actions at export time from the security group type through an explicit routing table, with a Manual — determine group type fallback rather than a silent guess when the type is absent',
+      'Implemented reviewer magic links as 32 random bytes, SHA-256 hashed at rest, single-use, bound to a person and cycle, and expiring at the cycle due date',
+      'Enforced 8 review rules server-side with dedicated test coverage: justification mandatory on revoke, no partial submission, no self-attestation, auto-closed lines accept no decision, closed cycles reject writes, audit entries carry the SSO-resolved identity, the secondary approver gains write access after the due date, and a job-based revoke routes to HR instead of a group edit',
+      'Built a 5-step reminder cadence stored as an anchor plus a day offset rather than fixed dates, so extending a due date after launch still yields a defensible schedule; only the human-readable instruction and the on/off switch are accepted from storage, because the anchor, offset, kind, and audience are code',
+      'Recorded failed notification deliveries rather than discarding them — an owner who never received the notice is a different control finding from one who ignored it',
+      'Solved runtime configuration for a build-time-inlined client bundle by having the server inject a whitelisted environment block into the served HTML per request, with the client preferring it over build-time values, so a single image stays valid across environments',
+      'Made the public environment surface an explicit whitelist rather than a filter of known secrets, with a test asserting no key matching SECRET, KEY, TOKEN, PASSWORD, CREDENTIAL, or PRIVATE can reach the browser, and escaped the injected payload so a value containing a closing script tag cannot break out of the element',
+      'Shipped light and dark themes through a single data-theme attribute where the dark layer overrides design tokens only and restates no component rules, using role tokens instead of ramp steps, lifting the brand red in dark mode to clear WCAG AA, and applying the theme pre-paint to avoid a flash',
+      'Diagnosed and fixed a boot-time configuration defect where the auth gate read its issuer at module scope before configuration was populated, leaving deployed endpoints unauthenticated while the logs reported a healthy start',
+      'Replaced silent environment fallthrough with a boot-time failure on an unrecognized environment name, on the principle that failing to start beats starting unauthenticated',
+      'Built a local OIDC provider for development — real discovery, authorization code with verified PKCE, token, userinfo, JWKS, and logout — excluded from the production build so reviewer and role flows could be exercised before identity-provider registration landed',
+    ],
+    impact: [
+      'All 8 screens delivered end to end: import, owners, assign, campaign, email, reviewer, export, runbook',
+      'Verified against the real pilot extract: 52 security groups, 1,105 access lines, 589 distinct people, 96 auto-closed, 1,009 to review',
+      'Byte-identical evidence regeneration — no generation timestamp, application-level ordering, SHA-256 manifest per export',
+      '596 test cases across server and client, including an acceptance suite pinned to the pilot extract date',
+      'Caught and fixed a configuration defect that had left deployed endpoints serving unauthenticated',
+      'Phases 1 through 4 implemented; phase 5 is UAT and defect fixing',
+    ],
+    technicalHighlights: [
+      'Clock-free pure-function parsing core for reproducible output',
+      'Byte-identical CSV engine with SHA-256 evidence manifest',
+      'Append-only audit log across 19 actions with SSO-resolved actors',
+      'Hashed, single-use, cycle-bound reviewer magic links',
+      'Anchor-plus-offset reminder cadence over stored dates',
+      'Whitelist-based runtime env injection into a build-time-inlined bundle',
+      'Token-only dark mode with WCAG AA enforced by test',
+    ],
+    technologies: [
+      'NestJS 11',
+      'Node.js 22',
+      'TypeScript',
+      'React 19',
+      'Vite 7',
+      'Tailwind CSS v4',
+      'React Query',
+      'Firestore',
+      'Zod',
+      'Jest',
+      'OIDC SSO',
+      'Helm',
+      'Kubernetes',
+    ],
+    metrics: [
+      { label: 'Access Lines Certified', value: '1,105' },
+      { label: 'API Endpoints', value: '36' },
+      { label: 'Test Cases', value: '596' },
+      { label: 'Enforcement Rules', value: '8' },
+    ],
+    roadmap: {
+      summary:
+        'Five-phase delivery — phases 1 through 4 implemented; phase 5 is UAT and defect fixing',
+      phases: 5,
+    },
+    featured: true,
+    category: ['Compliance Platform Engineering'],
+    visualizationType: 'workflow',
+    order: 2,
   },
   {
     slug: 'fw-flex-pipeline-redesign',
@@ -121,7 +205,7 @@ export const professionalWork: ProfessionalWork[] = [
     featured: true,
     category: ['Integration Architecture'],
     visualizationType: 'pipeline-architecture',
-    order: 2,
+    order: 3,
   },
   {
     slug: 'pc-cc-bigquery-migration',
@@ -177,7 +261,7 @@ export const professionalWork: ProfessionalWork[] = [
     featured: true,
     category: ['Data Architecture'],
     visualizationType: 'migration-flow',
-    order: 3,
+    order: 4,
   },
   {
     slug: 'rag-corpus-optimization',
@@ -227,7 +311,7 @@ export const professionalWork: ProfessionalWork[] = [
     ],
     featured: true,
     category: ['GenAI / RAG'],
-    order: 4,
+    order: 5,
   },
   {
     slug: 'critical-incident-response',
@@ -276,7 +360,7 @@ export const professionalWork: ProfessionalWork[] = [
     ],
     featured: true,
     category: ['Production Engineering'],
-    order: 5,
+    order: 6,
   },
   {
     slug: 'quote-journey-tracker-agent',
@@ -352,7 +436,7 @@ export const professionalWork: ProfessionalWork[] = [
     },
     featured: true,
     category: ['GenAI / AI Agents'],
-    order: 6,
+    order: 7,
   },
   {
     slug: 'multi-agent-pipeline-review',
@@ -418,7 +502,7 @@ export const professionalWork: ProfessionalWork[] = [
       'Built entirely using AI-assisted development with Cursor AI + Claude. AI assistance was used throughout architecture design, output_key pattern discovery, GlobalGemini implementation, deployment debugging, and iterative rule refinement across 4 production tuning cycles.',
     featured: true,
     category: ['GenAI / AI Agents'],
-    order: 7,
+    order: 8,
   },
   {
     slug: 'snaplogic-naming-conventions-agent',
@@ -471,6 +555,6 @@ export const professionalWork: ProfessionalWork[] = [
     ],
     featured: false,
     category: ['GenAI / AI Agents'],
-    order: 8,
+    order: 9,
   },
 ]

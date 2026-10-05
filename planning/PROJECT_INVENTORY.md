@@ -47,6 +47,19 @@
 10. **PlanItX**
    - Theme: SaaS / product engineering
 
+## Tier 2 — /work Only
+
+Full case study at `/work`, deliberately not in the homepage selection (`HOMEPAGE_SLUGS` in `components/work/WorkSection.tsx`).
+
+### Professional
+
+11. **Project Attest — Access Recertification**
+    - Theme: Compliance Platform Engineering
+    - Proof: 1,105 access lines certified, 36 API endpoints, 596 tests, 8 server-enforced review rules
+    - Proof: byte-identical evidence regeneration, append-only audit log across 19 actions
+    - Visual: import → assign → review → evidence pack workflow
+    - Source: Attest repository (not the master resume) — see `SOURCE_TRACEABILITY.md`
+
 ## Skills
 
 Integration:
