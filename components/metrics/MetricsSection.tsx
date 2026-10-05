@@ -63,7 +63,7 @@ const SECONDARY_METRICS: ImpactMetric[] = [
     emphasis: 'secondary',
   },
   {
-    value: '100+',
+    value: '15+',
     label: 'Platform Users',
     project: 'Automations Portal',
     emphasis: 'secondary',
