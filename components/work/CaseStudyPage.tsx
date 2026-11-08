@@ -371,6 +371,32 @@ export function CaseStudyPage({ project, prev, next }: CaseStudyPageProps) {
                 )}
               </Fade>
 
+              {project.slug === 'snaplogic-automations-portal' && (
+                <Fade reducedMotion={reducedMotion}>
+                  <figure className="cs-arch-video">
+                    <video
+                      className="cs-arch-video-player"
+                      controls
+                      playsInline
+                      preload="metadata"
+                      poster="/videos/snaplogic-automations-portal.jpg"
+                      width={1920}
+                      height={1080}
+                      aria-label="SnapLogic Automations Portal walkthrough"
+                    >
+                      <source
+                        src="/videos/snaplogic-automations-portal.mp4"
+                        type="video/mp4"
+                      />
+                    </video>
+                    <figcaption className="cs-arch-video-caption">
+                      Portal walkthrough — from requirement story to production
+                      SnapLogic pipeline
+                    </figcaption>
+                  </figure>
+                </Fade>
+              )}
+
               {/* Architecture visualization */}
               <Fade reducedMotion={reducedMotion}>
                 {project.slug === 'quote-journey-tracker-agent' ? (
