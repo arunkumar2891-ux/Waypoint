@@ -374,21 +374,15 @@ export function CaseStudyPage({ project, prev, next }: CaseStudyPageProps) {
               {project.slug === 'snaplogic-automations-portal' && (
                 <Fade reducedMotion={reducedMotion}>
                   <figure className="cs-arch-video">
-                    <video
+                    <iframe
                       className="cs-arch-video-player"
-                      controls
-                      playsInline
-                      preload="metadata"
-                      poster="/videos/snaplogic-automations-portal.jpg"
-                      width={1920}
-                      height={1080}
-                      aria-label="SnapLogic Automations Portal walkthrough"
-                    >
-                      <source
-                        src="/videos/snaplogic-automations-portal.mp4"
-                        type="video/mp4"
-                      />
-                    </video>
+                      src="https://www.youtube-nocookie.com/embed/u-pqEFN3gS4"
+                      title="SnapLogic Automations Portal walkthrough"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      loading="lazy"
+                    />
                     <figcaption className="cs-arch-video-caption">
                       Portal walkthrough — from requirement story to production
                       SnapLogic pipeline
